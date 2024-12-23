@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todolist</title>
+    <link rel="stylesheet" href="todo.css">
+</head>
+<script src="todo.js" defer></script>
+<body>
+    <main>
+        <div class="header">
+            <h1 class="top-head">To Do List</h1>
+            <h2 class="changing-head">Focus on <span>Today</span></h2>
+            <img class="sun-moon" src="./images/moon.svg" height="40vh" alt="dark_light_mode">
+        </div>
+        <div class="progress_container">
+            <p class="progress-statement">Raise the bar by completing your goals!</p>
+            <progress id="pro" value="23" max="100"></progress>
+            <span class="progress_label">2/3 Completed</span>
+            <p class="error_label">Please set all <span>0</span> goals</p>
+
+        </div>
+        <div class="goaladder">
+            <button class="addbtn">Add Goal</button>
+            
+        </div>
+        <!-- <div class="goal_container">
+            <input type="checkbox" class="checkbox">
+            <input id="first" type="text" class="goal_input" placeholder="Add A goal" >
+            <img src="./images/delete.png" class="debgoal" alt="delete">
+        </div> -->
+  
+        <p class="quote">Move one step ahed today!</p>
+        <p class="made_with">Made By Dev❤️</p>
+
+
+    </main>
+    
+</body>
+</html>
