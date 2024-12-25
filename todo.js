@@ -16,6 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
     "The Future",
     "Your Best Self",
   ];
+  
+let db=localStorage.getItem("isdark")
+if(db=="dark-mode")
+{
+document.body.classList.add('dark');
+darkModeToggle.src=`./images/Sun.svg`
+}
 
   let allGoals = JSON.parse(localStorage.getItem("allGoals")) || [];
 
@@ -106,9 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("allGoals", JSON.stringify(allGoals));
     renderGoals();
   });
-
   darkModeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
+    if(document.body.classList.contains('dark'))
+    {
+      localStorage.setItem("isdark",'light-mode')
+      
+      document.body.classList.remove('dark')
+      
+    }
+    else{
+      localStorage.setItem('isdark','dark-mode')
+      document.body.classList.add('dark');
+  
+
+    }
     const isDark = document.body.classList.contains("dark");
     darkModeToggle.src = isDark ? `./images/Sun.svg` : `./images/moon.svg`;
   });
@@ -118,18 +136,18 @@ document.addEventListener("DOMContentLoaded", () => {
     dayHead.textContent = days[randomIndex];
   }, 3000);
 
-  setInterval(() => {
-    fetch("https://qapi.vercel.app/api/random")
-      .then((Response) => Response.json())
-      .then((data) => {
-        processQuote(data);
-      })
-      .catch((err) => console.log(err));
-  }, 10000);
+  // setInterval(() => {
+  //   fetch("https://qapi.vercel.apprandom/api/")
+  //     .then((Response) => Response.json())
+  //     .then((data) => {
+  //       processQuote(data);
+  //     })
+  //     .catch((err) => alert(err));
+  // }, 10000);
 
-  function processQuote(data) {
-    quote.innerHTML = `${data.quote}`;
-  }
+  // function processQuote(data) {
+  //   quote.innerHTML = `${data.quote}`;
+  // }
 
   renderGoals();
 });
