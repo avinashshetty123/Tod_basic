@@ -5,9 +5,7 @@
 body{
     
     margin: 0;
-background-color: whitesmoke;
-
-   
+background-color: whitesmoke;  
 }
 main{
     padding: 0 16px 32px;
@@ -93,7 +91,9 @@ progress{
     width: 2vh;
     position: relative;
 
-
+}
+body.dark .debgoal {
+    filter: invert(1);
 }
 input::placeholder{
     text-align: center;
@@ -102,7 +102,6 @@ input::placeholder{
 .dark{
     background-color:#121212;
     color:#E0E0E0;
-
   
 }
 .dark main{
@@ -124,7 +123,7 @@ input::placeholder{
        top:0.2vh;
 
     }
-}
+    }
 .addbtn{
     border-radius: 12px;
 }

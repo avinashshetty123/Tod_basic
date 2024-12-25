@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorLabel = document.querySelector(".error_label span");
   const dayHead = document.querySelector(".changing-head span");
   const mainContainer = document.querySelector("main");
-  const quote=document.querySelector(".quote")
+  const quote = document.querySelector(".quote");
 
   const days = [
     "Tomorrow",
@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   let allGoals = JSON.parse(localStorage.getItem("allGoals")) || [];
+
   function updateProgress() {
     const totalGoals = allGoals.length;
     const completedGoals = allGoals.filter((goal) => goal.completed).length;
@@ -48,16 +49,28 @@ document.addEventListener("DOMContentLoaded", () => {
       goalInput.placeholder = "Add A Goal";
       goalInput.value = goal.name;
 
+      if (goal.completed) {
+        goalInput.classList.add("completed");
+        goalInput.disabled = true;
+      }
+
       const deleteImg = document.createElement("img");
       deleteImg.src = "./images/delete.png";
       deleteImg.alt = "delete";
       deleteImg.classList.add("debgoal");
+
       goalDiv.appendChild(checkbox);
       goalDiv.appendChild(goalInput);
       goalDiv.appendChild(deleteImg);
       mainContainer.insertBefore(goalDiv, addGoalButton.parentElement);
 
-      checkbox.addEventListener("click", () => {
+      checkbox.addEventListener("click", (e) => {
+        if (!goalInput.value.trim()) {
+          e.preventDefault();
+          alert("The goal name cannot be empty!");
+          return;
+        }
+
         allGoals[index].completed = checkbox.checked;
         localStorage.setItem("allGoals", JSON.stringify(allGoals));
         if (checkbox.checked) {
@@ -69,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         updateProgress();
       });
+
       errorLabel.innerHTML = `${allGoals.length}`;
 
       goalInput.addEventListener("input", (e) => {
@@ -86,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateProgress();
   }
+
   addGoalButton.addEventListener("click", () => {
     allGoals.push({ name: "", completed: false });
     localStorage.setItem("allGoals", JSON.stringify(allGoals));
@@ -94,27 +109,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   darkModeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
-    const isdark = document.body.classList.contains("dark");
-    darkModeToggle.src = isdark ? `./images/Sun.svg` : `./images/moon.svg`;
+    const isDark = document.body.classList.contains("dark");
+    darkModeToggle.src = isDark ? `./images/Sun.svg` : `./images/moon.svg`;
   });
 
   setInterval(() => {
     const randomIndex = Math.floor(Math.random() * days.length);
     dayHead.textContent = days[randomIndex];
-  
   }, 3000);
-  setInterval(()=>{
+
+  setInterval(() => {
     fetch("https://qapi.vercel.app/api/random")
-    .then((Response) => Response.json()).then((data)=>{
-    
-        Process(data);
-    }).catch((err)=>console.log(err));
-  
-  },10000)
-  function Process(data){
-    quote.innerHTML=`${data.quote}`
+      .then((Response) => Response.json())
+      .then((data) => {
+        processQuote(data);
+      })
+      .catch((err) => console.log(err));
+  }, 10000);
+
+  function processQuote(data) {
+    quote.innerHTML = `${data.quote}`;
   }
-    
 
   renderGoals();
 });
